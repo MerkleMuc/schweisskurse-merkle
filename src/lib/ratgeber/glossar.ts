@@ -1,0 +1,36 @@
+/* Glossar – Einträge unter /glossary/<slug>/ (bisherige URLs). */
+export interface Begriff { slug: string; name: string; text: string; links?: { href: string; label: string }[] }
+
+export const GLOSSAR: Begriff[] = [
+  { slug: 'abbrand', name: 'Abbrand', text: 'Unter Abbrand versteht man den Verlust von Metall bzw. Legierungselementen durch Oxidationsprozesse beim Schweißen. Ein gutes Schutzgas und die richtige Lichtbogenlänge helfen, den Abbrand zu minimieren.' },
+  { slug: 'abschmelzen', name: 'Abschmelzen', text: 'Das Schmelzen der Elektrode bzw. des Zusatzwerkstoffs im Lichtbogen. Beim MIG/MAG- und E-Hand-Schweißen schmilzt die Elektrode ab, beim WIG-Schweißen nicht.' },
+  { slug: 'abschmelzleistung', name: 'Abschmelzleistung', text: 'Menge des Schweißguts, die pro Zeiteinheit abgeschmolzen wird, meist in kg/h angegeben. MIG/MAG erreicht eine deutlich höhere Abschmelzleistung als WIG.' },
+  { slug: 'aktivgas', name: 'Aktivgas', text: 'Reaktionsfähiges Gas, das am Schweißprozess beteiligt ist, z. B. CO₂ oder Sauerstoff. Beim MAG-Schweißen wird ein aktives Gas verwendet.', links: [{ href: '/ratgeber/schweisszubehoer/schutzgase-aktive-und-inerte-schutzgase/', label: 'Aktive und inerte Schutzgase' }] },
+  { slug: 'aluminium', name: 'Aluminium', text: 'Leichtmetall mit hoher Wärmeleitfähigkeit und einer Oxidschicht mit hohem Schmelzpunkt. Wird mit WIG (Wechselstrom) oder MIG unter Argon geschweißt.', links: [{ href: '/ratgeber/metall/aluminium-schweissen-alu-schweissen/', label: 'Schweißen mit Aluminium' }] },
+  { slug: 'argon', name: 'Argon', text: 'Inertes Edelgas, das aus der Luft gewonnen wird. Standard-Schutzgas beim WIG-Schweißen und Basis vieler Mischgase.', links: [{ href: '/ratgeber/gase/gassorten/argon/', label: 'Argon im Überblick' }] },
+  { slug: 'einbrand', name: 'Einbrand', text: 'Tiefe, bis zu der der Grundwerkstoff beim Schweißen aufgeschmolzen wird. Zu geringer Einbrand führt zu Bindefehlern.' },
+  { slug: 'e-handschweissen', name: 'E-Handschweißen', text: 'Kurzform für Elektroden-Handschweißen, auch Lichtbogenhandschweißen genannt. Schmelzschweißverfahren mit umhüllter Stabelektrode ohne zusätzliches Schutzgas.', links: [{ href: '/ratgeber/schweissverfahren/elektroden-schweissen/', label: 'Elektroden-Schweißen' }] },
+  { slug: 'formiergas', name: 'Formiergas', text: 'Wurzelschutzgas aus inerten und wasserstoffhaltigen bzw. stickstoffhaltigen Gasen. Es schützt die Rückseite der Naht – etwa bei Edelstahlrohren – vor Oxidation.' },
+  { slug: 'helium', name: 'Helium', text: 'Inertes Gas mit hoher Wärmeleitfähigkeit. Erhöht im Gemisch mit Argon Einbrand und Schweißgeschwindigkeit, ist aber deutlich teurer.', links: [{ href: '/ratgeber/gase/gassorten/helium/', label: 'Helium im Überblick' }] },
+  { slug: 'hochfrequenzzuendung', name: 'Hochfrequenzzündung', text: 'Berührungslose Zündung des WIG-Lichtbogens durch einen Hochspannungsimpuls. Nicht geeignet für Personen mit Herzschrittmacher.', links: [{ href: '/ratgeber/schweissverfahren/wig-schweissen/zuendung-des-lichtbogens/', label: 'Zündung des Lichtbogens' }] },
+  { slug: 'inertgas', name: 'Inertgas', text: 'Reaktionsträges Gas wie Argon oder Helium, das sich nicht mit dem Schmelzbad verbindet. Verwendet beim MIG- und WIG-Schweißen.' },
+  { slug: 'kehlnaht', name: 'Kehlnaht', text: 'Naht in der Kehle zweier im Winkel zueinander stehender Bleche, z. B. am T-Stoß. Die häufigste Nahtform überhaupt.', links: [{ href: '/ratgeber/schweissanleitung/schweissnaehte-schweissnahtformen/kehlnaht-schweissen/', label: 'Kehlnaht schweißen' }] },
+  { slug: 'lichtbogen', name: 'Lichtbogen', text: 'Hell leuchtende elektrische Entladung zwischen zwei Elektroden – beim Schweißen zwischen Elektrode und Werkstück. Er liefert die Wärme zum Schmelzen.' },
+  { slug: 'lichtbogenhandschweissen', name: 'Lichtbogenhandschweißen', text: 'Manuelles Schmelzschweißverfahren mit abschmelzender Stabelektrode. Im Gegensatz zu anderen Lichtbogenschweißverfahren wie MIG/MAG oder WIG wird beim Lichtbogenhandschweißen kein Schutzgas verwendet.', links: [{ href: '/elektroden-einsteiger-schweisskurs/', label: 'E-Schweißkurs für Einsteiger' }] },
+  { slug: 'mag-schweissen', name: 'MAG-Schweißen', text: 'Metall-Aktivgas-Schweißen: Schutzgasschweißen mit abschmelzender Drahtelektrode und aktivem Gas, vor allem für Stahl.', links: [{ href: '/ratgeber/schweissverfahren/mig-mag-schweissen/', label: 'MIG/MAG-Schweißen' }] },
+  { slug: 'masseanschluss', name: 'Masseanschluss', text: 'Klemme, die am Werkstück bzw. Schweißtisch befestigt wird. Sie schließt den Stromkreis zwischen Brenner, Werkstück und Stromquelle.' },
+  { slug: 'mig-schweissen', name: 'MIG-Schweißen', text: 'Metall-Inertgas-Schweißen: Schutzgasschweißen mit abschmelzender Drahtelektrode und inertem Gas, vor allem für Aluminium und Nichteisenmetalle.' },
+  { slug: 'orbitalschweissen', name: 'Orbitalschweißen', text: 'Mechanisiertes Schweißen, bei dem der Brenner kreisförmig um ein Rohr geführt wird, um Rohrabschnitte zu verbinden.' },
+  { slug: 'schlacke', name: 'Schlacke', text: 'Nichtmetallische Schicht, die sich beim E-Hand-Schweißen aus der Elektrodenumhüllung bildet und die Naht beim Erkalten schützt. Sie wird anschließend abgeschlagen.' },
+  { slug: 'schmelzbad', name: 'Schmelzbad', text: 'Der flüssige Bereich aus Grund- und Zusatzwerkstoff unter dem Lichtbogen bzw. der Flamme. Das Führen des Schmelzbads ist die Kernfertigkeit beim Schweißen.' },
+  { slug: 'schutzgas', name: 'Schutzgas', text: 'Gas, das Lichtbogen und Schmelzbad vor der Umgebungsluft schützt und den Schweißprozess beeinflusst.', links: [{ href: '/ratgeber/gase/aufgaben-und-auswirkungen-des-schutzgases/', label: 'Aufgaben des Schutzgases' }] },
+  { slug: 'schweissbrenner', name: 'Schweißbrenner', text: 'Der von Hand geführte Teil der Schweißanlage, bestehend aus Griff mit Anschlüssen und Regelventilen sowie auswechselbaren Düsen.' },
+  { slug: 'schweissgut', name: 'Schweißgut', text: 'Das bei der Schweißung aufgeschmolzene und wieder erstarrte Material aus Grundwerkstoff und/oder Zusatzwerkstoff.' },
+  { slug: 'stumpfnaht', name: 'Stumpfnaht', text: 'Naht zwischen zwei Blechen, die in einer Ebene Kante an Kante liegen.', links: [{ href: '/ratgeber/schweissanleitung/schweissnaehte-schweissnahtformen/', label: 'Schweißnahtformen' }] },
+  { slug: 'wig-schweissen', name: 'WIG-Schweißen', text: 'Wolfram-Inertgas-Schweißen: Lichtbogenschweißverfahren mit nicht abschmelzender Wolframelektrode und inertem Schutzgas.', links: [{ href: '/wig-einsteiger-schweisskurs/', label: 'WIG-Einsteigerkurs' }] },
+  { slug: 'wolframelektrode', name: 'Wolframelektrode', text: 'Nicht abschmelzende Elektrode beim WIG-Schweißen. Sie wird im Brenner von einer Spannhülse gehalten und je nach Stromart angeschliffen.' },
+  { slug: 'wurzel', name: 'Wurzel', text: 'Die unterste Lage einer Schweißnaht. Sie bestimmt die Durchschweißung und wird bei Prüfungen besonders bewertet.' },
+  { slug: 'zusatzwerkstoff', name: 'Zusatzwerkstoff', text: 'Draht, Stab oder Elektrode, die beim Schweißen abgeschmolzen und der Naht zugeführt werden. Er muss zum Grundwerkstoff passen.' }
+];
+
+export const GLOSSAR_BY_SLUG = Object.fromEntries(GLOSSAR.map((b) => [b.slug, b]));
