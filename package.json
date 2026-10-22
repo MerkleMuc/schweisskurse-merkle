@@ -12,7 +12,8 @@
     "start": "next start",
     "lint": "tsc --noEmit",
     "import:wp": "node scripts/import-wordpress.mjs",
-    "check:urls": "node scripts/check-urls.mjs"
+    "check:urls": "node scripts/check-urls.mjs",
+    "export:static": "node scripts/export-static.mjs"
   },
   "dependencies": {
     "next": "^16.4.2",

@@ -130,3 +130,14 @@ src/
 scripts/                 WordPress-Import, URL-Prüfung
 docs/                    Designsystem, Konzept, URL-Mapping, TODO
 ```
+
+## Vorschau auf GitHub Pages
+
+Der Workflow `.github/workflows/pages.yml` baut bei jedem Push auf `main` die Anwendung,
+exportiert mit `scripts/export-static.mjs` einen statischen Schnappschuss und veröffentlicht ihn unter
+**https://merklemuc.github.io/schweisskurse-merkle/**.
+
+Einmalig einrichten: Repository → *Settings* → *Pages* → *Build and deployment* → *Source: GitHub Actions*.
+
+Die Pages-Vorschau zeigt alle Seiten, Bilder und Animationen. Buchung, Formulare, Live-Filter
+und Backend brauchen den Node-Server und sind dort deaktiviert.
