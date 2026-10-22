@@ -786,7 +786,26 @@ html:not(.js) .float { opacity: 1; transform: none; pointer-events: auto; }
 .stop-teal { stop-color: var(--teal); } .stop-deep { stop-color: var(--teal-deep); } .stop-light { stop-color: var(--teal-light); } .stop-s0 { stop-color: var(--s0); } .stop-dark { stop-color: var(--dark); }
 
 /* Liquid Metal (Hero rechts) */
-.liquid-metal { position: absolute; inset: 0; overflow: hidden; background: radial-gradient(120% 90% at 30% 20%, #F4F6F8 0%, #AAAAAC 38%, #6E7378 62%, #D9DDE0 82%, #8E9398 100%); box-shadow: var(--sh3); }
+/* Schmelzbad: ovale, sich langsam verformende Metallfläche.
+   Ohne JavaScript/WebGL (z. B. statische Vorschau) bewegt sich der Metallverlauf per CSS. */
+.liquid-metal {
+  position: absolute; inset: 6%; overflow: hidden; isolation: isolate;
+  border-radius: 58% 42% 52% 48% / 46% 56% 44% 54%;
+  background: linear-gradient(115deg, #F4F6F8 0%, #AAAAAC 22%, #5E6368 38%, #D9DDE0 52%, #8E9398 66%, #F4F6F8 80%, #6E7378 100%);
+  background-size: 260% 260%;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .55), inset 0 0 0 1px rgba(255, 255, 255, .18);
+  animation: pool-morph 16s ease-in-out infinite alternate, pool-sheen 12s ease-in-out infinite alternate;
+  will-change: border-radius, transform;
+}
 .liquid-metal canvas { display: block; }
+@keyframes pool-morph {
+  0%   { border-radius: 58% 42% 52% 48% / 46% 56% 44% 54%; transform: rotate(0deg) scale(1, 1); }
+  25%  { border-radius: 46% 54% 40% 60% / 58% 44% 56% 42%; transform: rotate(6deg) scale(1.04, .95); }
+  50%  { border-radius: 62% 38% 58% 42% / 42% 52% 48% 58%; transform: rotate(-4deg) scale(.96, 1.04); }
+  75%  { border-radius: 44% 56% 48% 52% / 54% 40% 60% 46%; transform: rotate(3deg) scale(1.03, .97); }
+  100% { border-radius: 54% 46% 38% 62% / 50% 60% 40% 50%; transform: rotate(-2deg) scale(1, 1.02); }
+}
+@keyframes pool-sheen { from { background-position: 0% 30%; } to { background-position: 100% 70%; } }
 .hero-metal { position: relative; width: 100%; aspect-ratio: 1 / 1; }
-.hero-metal__tag { position: absolute; left: 16px; bottom: 16px; z-index: 1; background: var(--glass-dark); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); color: var(--on-dark); }
+.hero-metal__tag { position: absolute; left: 8%; bottom: 6%; z-index: 1; background: var(--glass-dark); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur); color: var(--on-dark); }
+@media (prefers-reduced-motion: reduce) { .liquid-metal { animation: none !important; } }

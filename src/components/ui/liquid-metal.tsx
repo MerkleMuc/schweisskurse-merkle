@@ -10,6 +10,8 @@ import { LiquidMetal, liquidMetalPresets } from '@paper-design/shaders-react';
  *
  * - Rendert per WebGL erst im Browser; bis dahin (und ohne JavaScript/WebGL)
  *   zeigt die Fläche einen statischen Metallverlauf.
+ * - Die ovale Form verformt sich per CSS (globals.css: pool-morph); der Shader
+ *   ist etwas größer als die Fläche, damit seine eckigen Ränder außerhalb liegen.
  * - Bei „Bewegung reduzieren“ steht das Metall still (speed 0).
  */
 export default function LiquidMetalPanel({ label }: { label?: string }) {
@@ -33,7 +35,7 @@ export default function LiquidMetalPanel({ label }: { label?: string }) {
 
   return (
     <div className="liquid-metal" role="img" aria-label={label || 'Flüssiges Metall in Bewegung'}>
-      {ready && <LiquidMetal {...preset} speed={still ? 0 : preset.speed} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />}
+      {ready && <LiquidMetal {...preset} speed={still ? 0 : preset.speed} style={{ position: 'absolute', inset: '-12%', width: '124%', height: '124%' }} />}
     </div>
   );
 }
