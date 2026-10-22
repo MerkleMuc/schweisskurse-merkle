@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   alternates: { canonical: '/schweisskurse-lehrgaenge/' }
 };
 
-export default function Page() {
-  const cards = kursCards();
+export default async function Page() {
+  const cards = await kursCards();
   return (
     <>
       <JsonLd data={{ '@context': 'https://schema.org', '@type': 'ItemList', itemListElement: KURSE.map((k, i) => ({ '@type': 'ListItem', position: i + 1, url: absUrl(`/${k.slug}/`), name: k.name })) }} />

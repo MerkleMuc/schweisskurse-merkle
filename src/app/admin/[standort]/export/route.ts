@@ -16,10 +16,10 @@ export async function GET(req: Request, { params }: { params: Promise<{ standort
   let body = '';
   if (typ === 'termine') {
     body = csv([['Datum', 'Bis', 'Kurs', 'Beginn', 'Ende', 'Preis', 'Plätze', 'Extern', 'Online', 'Frei', 'Status', 'Dozent'],
-      ...listTermine({ standort, nurAktiv: false }).map((t) => [t.datum, t.datum_bis, KURS_BY_SLUG[t.kurs]?.name, t.start_zeit, t.end_zeit, (t.preis_cent / 100).toFixed(2).replace('.', ','), t.plaetze_gesamt, t.plaetze_extern, t.gebucht, t.frei, t.status, t.dozent])]);
+      ...(await listTermine({ standort, nurAktiv: false })).map((t) => [t.datum, t.datum_bis, KURS_BY_SLUG[t.kurs]?.name, t.start_zeit, t.end_zeit, (t.preis_cent / 100).toFixed(2).replace('.', ','), t.plaetze_gesamt, t.plaetze_extern, t.gebucht, t.frei, t.status, t.dozent])]);
   } else {
     const terminId = u.searchParams.get('termin') || undefined;
-    const b = listBuchungen(standort, { terminId });
+    const b = await listBuchungen(standort, { terminId });
     if (typ === 'teilnehmer') {
       body = csv([['Datum', 'Kurs', 'Vorname', 'Nachname', 'Geburtsdatum', 'Erfahrung', 'Buchung', 'Status', 'E-Mail', 'Telefon'],
         ...b.filter((x) => ['neu', 'bezahlt'].includes(x.status)).flatMap((x) => x.teilnehmer.map((p) => [x.datum, KURS_BY_SLUG[x.kurs]?.kurz, p.vorname, p.nachname, p.geburtsdatum, (p as { erfahrung?: string }).erfahrung, x.ref, x.status, x.email, x.telefon]))]);

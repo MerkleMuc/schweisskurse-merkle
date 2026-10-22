@@ -15,9 +15,9 @@ import { MapConsent } from './MapConsent';
 import { FilialeMuenchen, KursraumDozenten, ReviewsSection, FaqSection, VideosSection } from './Sections';
 
 /* Gemeinsame Vorlage der Standortseiten /region-muenchen/ und /region-hamburg/. */
-export function LocationPage({ id, h1, lead }: { id: StandortId; h1: React.ReactNode; lead: string }) {
+export async function LocationPage({ id, h1, lead }: { id: StandortId; h1: React.ReactNode; lead: string }) {
   const s = STANDORTE[id];
-  const termine = kommendeTermine({ standort: id });
+  const termine = await kommendeTermine({ standort: id });
   const kurse = kurseFuer(id);
   const naechste = naechsteJeKurs(termine);
 

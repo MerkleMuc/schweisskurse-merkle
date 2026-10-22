@@ -52,7 +52,6 @@ async function cssFile(href) {
 }
 
 const bilder = new Set();
-const HINWEIS = `<div style="position:sticky;top:0;z-index:999;background:var(--ember);color:var(--on-dark);font:600 12px/1.4 system-ui,sans-serif;padding:6px 16px;text-align:center">Vorschau – Buchung, Kalender-Filter und Backend funktionieren nur in der laufenden Anwendung</div>`;
 
 for (const [p, raw] of html) {
   let t = raw
@@ -80,7 +79,7 @@ for (const [p, raw] of html) {
     if (/^\/(buchen|admin|api)\b/.test(h)) return `href="${BASE}/vorschau-hinweis/"`;
     return `href="${BASE}${h}"`;
   });
-  t = t.replace(/ action="[^"]*"/g, ` action="${BASE}/vorschau-hinweis/"`).replace('<body>', '<body>' + HINWEIS);
+  t = t.replace(/ action="[^"]*"/g, ` action="${BASE}/vorschau-hinweis/"`);
   const file = path.join(OUT, p, 'index.html');
   await fs.mkdir(path.dirname(file), { recursive: true });
   await fs.writeFile(file, t);

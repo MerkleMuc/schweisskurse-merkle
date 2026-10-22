@@ -66,7 +66,7 @@ export async function neuerTermin(fd: FormData) {
       if (!d) return d ?? null;
       const x = new Date(d + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + i * abstand); return x.toISOString().slice(0, 10);
     };
-    createTermin({ ...t, datum: shift(t.datum)!, datum_bis: shift(t.datum_bis) });
+    await createTermin({ ...t, datum: shift(t.datum)!, datum_bis: shift(t.datum_bis) });
   }
   sync();
   redirect(`/admin/${standort}/?ok=${wiederholen > 1 ? `${wiederholen}+Termine+angelegt` : 'Termin+angelegt'}`);
@@ -76,7 +76,7 @@ export async function speichereTermin(fd: FormData) {
   const standort = standortOf(fd);
   await requireSession(standort);
   const id = String(fd.get('id'));
-  updateTermin(id, standort, readTermin(fd, standort));
+  await updateTermin(id, standort, readTermin(fd, standort));
   sync();
   redirect(String(fd.get('zurueck') || `/admin/${standort}/`) + '?ok=Gespeichert');
 }
@@ -89,7 +89,7 @@ export async function schnellAenderung(fd: FormData) {
   const gesamt = Number(fd.get('plaetze_gesamt'));
   const extern = Number(fd.get('plaetze_extern'));
   const status = String(fd.get('status') || '');
-  updateTermin(id, standort, {
+  await updateTermin(id, standort, {
     plaetze_gesamt: Number.isFinite(gesamt) && gesamt > 0 ? Math.round(gesamt) : undefined,
     plaetze_extern: Number.isFinite(extern) && extern >= 0 ? Math.round(extern) : undefined,
     status: ['aktiv', 'abgesagt', 'entwurf'].includes(status) ? (status as TerminInput['status']) : undefined
@@ -101,10 +101,10 @@ export async function schnellAenderung(fd: FormData) {
 export async function dupliziereTermin(fd: FormData) {
   const standort = standortOf(fd);
   await requireSession(standort);
-  const t = getTermin(String(fd.get('id')));
+  const t = await getTermin(String(fd.get('id')));
   if (!t || t.standort !== standort) redirect(`/admin/${standort}/`);
   const x = new Date(t!.datum + 'T12:00:00Z'); x.setUTCDate(x.getUTCDate() + 7);
-  const id = createTermin({ standort, kurs: t!.kurs, datum: x.toISOString().slice(0, 10), datum_bis: null, start_zeit: t!.start_zeit, end_zeit: t!.end_zeit, plaetze_gesamt: t!.plaetze_gesamt, plaetze_extern: 0, preis_cent: t!.preis_cent, dozent: t!.dozent, hinweis: t!.hinweis, status: 'entwurf' });
+  const id = await createTermin({ standort, kurs: t!.kurs, datum: x.toISOString().slice(0, 10), datum_bis: null, start_zeit: t!.start_zeit, end_zeit: t!.end_zeit, plaetze_gesamt: t!.plaetze_gesamt, plaetze_extern: 0, preis_cent: t!.preis_cent, dozent: t!.dozent, hinweis: t!.hinweis, status: 'entwurf' });
   sync();
   redirect(`/admin/${standort}/termin/${id}/?ok=Kopie+als+Entwurf+angelegt`);
 }
@@ -112,7 +112,7 @@ export async function dupliziereTermin(fd: FormData) {
 export async function loescheTermin(fd: FormData) {
   const standort = standortOf(fd);
   await requireSession(standort);
-  const r = deleteTermin(String(fd.get('id')), standort);
+  const r = await deleteTermin(String(fd.get('id')), standort);
   sync();
   redirect(`/admin/${standort}/?ok=${r === 'geloescht' ? 'Termin+gel%C3%B6scht' : 'Termin+hat+Buchungen+und+wurde+abgesagt'}`);
 }
@@ -122,7 +122,7 @@ export async function buchungStatus(fd: FormData) {
   await requireSession(standort);
   const status = String(fd.get('status'));
   if (!['neu', 'bezahlt', 'storniert', 'widerrufen'].includes(status)) return;
-  setBuchungStatus(Number(fd.get('id')), standort, status as 'neu');
+  await setBuchungStatus(Number(fd.get('id')), standort, status as 'neu');
   sync();
   redirect(String(fd.get('zurueck') || `/admin/${standort}/buchungen/`) + '?ok=Status+ge%C3%A4ndert');
 }
@@ -130,6 +130,6 @@ export async function buchungStatus(fd: FormData) {
 export async function anfrageErledigt(fd: FormData) {
   const standort = standortOf(fd);
   await requireSession(standort);
-  setAnfrageErledigt(Number(fd.get('id')), fd.get('erledigt') === '1');
+  await setAnfrageErledigt(Number(fd.get('id')), fd.get('erledigt') === '1');
   redirect(`/admin/${standort}/anfragen/`);
 }

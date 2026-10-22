@@ -4,7 +4,7 @@
   "private": true,
   "description": "Relaunch schweisskurse-merkle.de – Next.js, Kursbuchung und Mitarbeiter-Backend",
   "engines": {
-    "node": ">=22.5"
+    "node": ">=20"
   },
   "scripts": {
     "dev": "next dev",
@@ -16,8 +16,11 @@
     "export:static": "node scripts/export-static.mjs"
   },
   "dependencies": {
+    "@electric-sql/pglite": "^0.5.11",
+    "@paper-design/shaders-react": "^0.0.82",
     "next": "^16.4.2",
     "nodemailer": "^10.1.7",
+    "postgres": "^3.4.9",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "server-only": "^0.0.1",

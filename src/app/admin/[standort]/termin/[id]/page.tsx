@@ -16,9 +16,9 @@ export default async function TerminDetail({ params, searchParams }: { params: P
   if (!isStandort(standort)) notFound();
   await requireSession(standort);
   const { ok } = await searchParams;
-  const t = getTermin(id);
+  const t = await getTermin(id);
   if (!t || t.standort !== standort) notFound();
-  const buchungen = listBuchungen(standort, { terminId: id });
+  const buchungen = await listBuchungen(standort, { terminId: id });
   const self = `/admin/${standort}/termin/${id}/`;
   const k = KURS_BY_SLUG[t.kurs];
 

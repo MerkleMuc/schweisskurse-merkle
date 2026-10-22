@@ -38,7 +38,7 @@ export default async function KursSeite({ params }: { params: Promise<{ slug: st
   const { slug } = await params;
   const k = KURS_BY_SLUG[slug];
   if (!k) notFound();
-  const termine = kommendeTermine({ kurs: k.slug });
+  const termine = await kommendeTermine({ kurs: k.slug });
   const frei = termine.filter((t) => t.frei > 0);
   const vor = k.voraussetzungKurs ? KURS_BY_SLUG[k.voraussetzungKurs] : null;
   const ort = STANDORTE[k.standorte[0]];

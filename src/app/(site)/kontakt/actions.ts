@@ -27,7 +27,7 @@ export async function sendeAnfrage(_p: FormState, fd: FormData): Promise<FormSta
     return { ok: false, errors, message: 'Bitte prüfen Sie die markierten Felder.' };
   }
   const a = r.data;
-  createAnfrage({ ...a, standort: a.standort || undefined });
+  await createAnfrage({ ...a, standort: a.standort || undefined });
   await sendMail({ to: teamAdresse(a.standort), replyTo: a.email, subject: `Anfrage Schweißkurse: ${a.thema}`, text: `${a.nachricht}\n\n— ${a.name}\n${a.email}\n${a.telefon || ''}\nStandort: ${a.standort || 'egal'}` });
   await sendMail({ to: a.email, subject: 'Ihre Anfrage bei Merkle Schweißkurse', text: `Guten Tag ${a.name},\n\nvielen Dank für Ihre Nachricht. Wir melden uns in der Regel innerhalb eines Werktags.\n\nIhre Nachricht:\n${a.nachricht}\n\nIhr Team von Merkle Schweißkurse\n${SITE.email}` });
   return { ok: true, message: 'Vielen Dank! Ihre Nachricht ist bei uns angekommen. Wir melden uns in der Regel innerhalb eines Werktags.' };
@@ -52,7 +52,7 @@ export async function sendeWiderruf(_p: FormState, fd: FormData): Promise<FormSt
   }
   const w = r.data;
   const zeit = new Date().toLocaleString('de-DE', { timeZone: 'Europe/Berlin' });
-  createWiderruf({ ...w });
+  await createWiderruf({ ...w });
   await sendMail({ to: teamAdresse('muenchen'), replyTo: w.email, subject: `Widerruf ${w.ref || ''} von ${w.name}`, text: `Widerrufserklärung über die Website (${zeit})\n\nName: ${w.name}\nE-Mail: ${w.email}\nBuchungsnummer: ${w.ref || '–'}\nNachricht: ${w.nachricht || '–'}` });
   await sendMail({ to: w.email, subject: 'Eingangsbestätigung Ihres Widerrufs', text: `Guten Tag ${w.name},\n\nwir bestätigen den Eingang Ihrer Widerrufserklärung am ${zeit}${w.ref ? ` zur Buchung ${w.ref}` : ''}.\n\nIhre Merkle Schweißkurse\n${SITE.email}` });
   revalidatePath('/', 'layout');

@@ -8,6 +8,8 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   trailingSlash: true,
   poweredByHeader: false,
+  // Datenbanktreiber nicht bündeln (PGlite lädt WebAssembly-Dateien zur Laufzeit)
+  serverExternalPackages: ['@electric-sql/pglite', 'postgres'],
   reactStrictMode: true,
   images: {
     formats: ['image/avif', 'image/webp'],

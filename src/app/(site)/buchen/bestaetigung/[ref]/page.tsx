@@ -17,9 +17,9 @@ export default async function Bestaetigung({ params, searchParams }: { params: P
   const { ref } = await params;
   const { t: token } = await searchParams;
   if (!checkRefToken(ref, token)) notFound();
-  const b = getBuchung(ref);
+  const b = await getBuchung(ref);
   if (!b) notFound();
-  const t = getTermin(b.termin_id)!;
+  const t = (await getTermin(b.termin_id))!;
   const k = KURS_BY_SLUG[t.kurs];
   const ort = STANDORTE[t.standort];
   const betrag = b.betrag_cent / 100;

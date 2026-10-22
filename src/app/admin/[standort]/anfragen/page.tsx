@@ -10,7 +10,7 @@ export default async function Anfragen({ params }: { params: Promise<{ standort:
   const { standort } = await params;
   if (!isStandort(standort)) notFound();
   await requireSession(standort);
-  const liste = listAnfragen(standort);
+  const liste = await listAnfragen(standort);
   return (
     <>
       <AdminBar standort={standort} aktiv="anfragen" />

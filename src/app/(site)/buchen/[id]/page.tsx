@@ -15,7 +15,7 @@ export const metadata: Metadata = { title: 'Kurs buchen', robots: { index: false
 
 export default async function Buchen({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const t = getTermin(id);
+  const t = await getTermin(id);
   if (!t) notFound();
   const k = KURS_BY_SLUG[t.kurs];
   const ort = STANDORTE[t.standort];

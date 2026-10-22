@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   alternates: { canonical: '/termine-und-anmeldungen/' }
 };
 
-export default function Page() {
-  const termine = kommendeTermine();
+export default async function Page() {
+  const termine = await kommendeTermine();
   return (
     <>
       <JsonLd data={termine.slice(0, 30).map((t) => eventLd(KURS_BY_SLUG[t.kurs], t))} />

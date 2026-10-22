@@ -18,9 +18,9 @@ export default async function AdminTermine({ params, searchParams }: { params: P
   const { ok, alle } = await searchParams;
   const s = STANDORTE[standort];
   const h = heute();
-  const termine = listTermine({ standort, nurAktiv: false, ab: alle ? undefined : h });
+  const termine = await listTermine({ standort, nurAktiv: false, ab: alle ? undefined : h });
   const kurse = kurseFuer(standort);
-  const buchungen = listBuchungen(standort);
+  const buchungen = await listBuchungen(standort);
   const offen = buchungen.filter((b) => b.status === 'neu').length;
   const kommend = termine.filter((t) => t.datum >= h && t.status === 'aktiv');
   const freiSumme = kommend.reduce((a, t) => a + t.frei, 0);

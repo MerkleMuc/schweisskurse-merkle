@@ -28,7 +28,7 @@ export function Header({ phone, phoneHref }: { phone: string; phoneHref: string 
 
   return (
     <header className={`header${overDark ? ' header--over-dark' : ''}${scrolled ? ' is-scrolled' : ''}`}>
-      <div className="header__service on-dark">
+      <div className="header__service">
         <div className="container">
           <nav className="header__locs" aria-label="Kursorte">
             <Link href="/region-muenchen/" aria-current={pathname === '/region-muenchen/' ? 'page' : undefined}><Icon name="pin" />München</Link>

@@ -25,8 +25,8 @@ npm run build
 npm start                       # Port 3000, PORT=… zum Ändern
 ```
 
-Voraussetzung: **Node.js ≥ 22.5** (für das eingebaute `node:sqlite`). Es gibt keinen
-externen Datenbankserver und keine nativen Abhängigkeiten.
+Voraussetzung: **Node.js ≥ 20**. Datenbank ist **Postgres**: in Produktion über `DATABASE_URL`
+(z. B. Neon auf Vercel), lokal ohne Einrichtung über das eingebettete PGlite in `./data/pglite`.
 
 ## Was drin ist
 
@@ -52,7 +52,7 @@ Siehe [`.env.example`](.env.example). Pflicht in Produktion:
 | Variable | Zweck |
 |---|---|
 | `NEXT_PUBLIC_SITE_URL` | `https://www.schweisskurse-merkle.de` |
-| `DATA_DIR` | Verzeichnis der SQLite-Datei – **muss Deployments überdauern** |
+| `DATABASE_URL` | Postgres-Verbindung (Neon/Vercel Postgres). Ohne Wert: lokales PGlite in `DATA_DIR` |
 | `ADMIN_PASSWORD_MUENCHEN`, `ADMIN_PASSWORD_HAMBURG` | Zugänge zum Backend. Ohne Wert ist der Login gesperrt |
 | `ADMIN_SESSION_SECRET` | Zufallswert zum Signieren der Sitzungen (`openssl rand -hex 32`) |
 | `SMTP_*`, `MAIL_*` | E-Mail-Versand. Ohne SMTP wird nur protokolliert |
@@ -100,18 +100,26 @@ URL-Inventar der Altseite.
 
 ## Deployment
 
-Die Anwendung braucht einen Node-Prozess und ein beschreibbares, dauerhaftes Verzeichnis
-(`DATA_DIR`) – z. B. ein vServer, Docker auf einem Server, Render, Railway oder Fly.io mit Volume.
+### Vercel (empfohlen)
+
+1. Projekt mit dem GitHub-Repo verbinden (Framework: Next.js, keine weiteren Build-Einstellungen).
+2. **Storage → Create Database → Neon (Postgres)** und mit dem Projekt verbinden. Vercel setzt
+   `DATABASE_URL`/`POSTGRES_URL` automatisch; die Tabellen legt die App beim ersten Aufruf selbst an.
+3. Unter **Settings → Environment Variables** die übrigen Werte aus `.env.example` eintragen
+   (mindestens `ADMIN_PASSWORD_MUENCHEN`, `ADMIN_PASSWORD_HAMBURG`, `ADMIN_SESSION_SECRET`,
+   `NEXT_PUBLIC_SITE_URL`; für E-Mails `SMTP_*`), danach **Redeploy**.
+
+### Eigener Server / Docker
 
 ```bash
 docker build -t schweisskurse .
-docker run -p 3000:3000 -v /srv/schweisskurse-data:/app/data --env-file .env schweisskurse
+docker run -p 3000:3000 --env-file .env schweisskurse   # mit DATABASE_URL
 ```
 
-Rein serverlose Plattformen (z. B. Vercel) haben kein dauerhaftes Dateisystem; dort müsste
-`src/lib/db.ts` auf eine gehostete Datenbank (Postgres/Turso) umgestellt werden.
+Ohne `DATABASE_URL` nutzt die App PGlite in `DATA_DIR` – dann das Verzeichnis als Volume einbinden
+(`-v /srv/schweisskurse-data:/app/data`).
 
-Backups: Die Datei `${DATA_DIR}/schweisskurse.db` regelmäßig sichern (z. B. nächtlich per `sqlite3 … ".backup …"`).
+Backups: bei Neon über die Point-in-Time-Wiederherstellung, bei PGlite den Ordner `data/pglite` sichern.
 
 ## Struktur
 

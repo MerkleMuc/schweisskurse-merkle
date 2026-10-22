@@ -7,9 +7,9 @@ import { kommendeTermine } from '@/lib/termine';
 export const revalidate = 3600;
 
 /* llms.txt – kompakte, maschinenlesbare Zusammenfassung für KI-Suchsysteme (GEO). */
-export function GET() {
+export async function GET() {
   const m = STANDORTE.muenchen, h = STANDORTE.hamburg;
-  const termine = kommendeTermine().slice(0, 15);
+  const termine = (await kommendeTermine()).slice(0, 15);
   const kurse = Object.fromEntries(KURSE.map((k) => [k.slug, k]));
   const txt = `# ${SITE.name}
 

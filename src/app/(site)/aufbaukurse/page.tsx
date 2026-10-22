@@ -11,12 +11,12 @@ export const metadata: Metadata = {
   alternates: { canonical: '/aufbaukurse/' }
 };
 
-export default function Page() {
+export default async function Page() {
   return (
     <>
       <PageHero trail={[{ label: 'Schweißkurse', href: '/schweisskurse-lehrgaenge/' }, { label: 'Aufbaukurse', href: '/aufbaukurse/' }]} kicker="Weiter lernen" title={<>Aufbaukurse <b>mit Prüfung</b></>}
         lead="Wir bieten Aufbau-Schweißkurse für das WIG-Schweißen von Aluminium, für Fortgeschrittene im MAG-Schweißen und für das Impulsschweißen – sowie Lehrgänge für prüfpflichtige Bauteile inklusive Schweißerprüfung." />
-      <section className="section"><div className="container"><h2 className="sr-only">Aufbaukurse und Lehrgänge</h2><CourseFilter kurse={kursCards((k) => k.level !== 'Einsteiger')} /></div></section>
+      <section className="section"><div className="container"><h2 className="sr-only">Aufbaukurse und Lehrgänge</h2><CourseFilter kurse={await kursCards((k) => k.level !== 'Einsteiger')} /></div></section>
       <section className="section section--s1">
         <div className="container">
           <SectionHead kicker="Prüfung" title={<>Was die Schweißerprüfung <b>bedeutet</b></>} lead="Bei der Prüfung nach DIN EN ISO 9606-1 schweißen Sie Prüfstücke in festgelegten Positionen. Bestanden, gilt der Schweißerpass drei Jahre." />

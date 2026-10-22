@@ -19,7 +19,7 @@ export async function bucheKurs(_prev: BookingState, fd: FormData): Promise<Book
   if (fd.get('website')) return { ok: false, message: 'Die Anfrage konnte nicht verarbeitet werden.' }; // Honeypot
 
   const terminId = String(fd.get('terminId') || '');
-  const termin = getTermin(terminId);
+  const termin = await getTermin(terminId);
   if (!termin) return { ok: false, message: 'Der Termin wurde nicht gefunden.' };
   const kurs = KURS_BY_SLUG[termin.kurs];
   const pruefung = kurs?.verfahren === 'pruefung';
@@ -79,7 +79,7 @@ export async function bucheKurs(_prev: BookingState, fd: FormData): Promise<Book
 
   let ref: string; let betragCent: number;
   try {
-    const r = createBuchung({
+    const r = await createBuchung({
       terminId, anzahl, kundentyp, email, telefon,
       rechnung: rechnung as never, teilnehmer: teilnehmer as never,
       zahlungsart: zahlungsart!, bemerkung: get('bemerkung').slice(0, 2000) || undefined,

@@ -5,8 +5,9 @@ import { kommendeTermine } from '@/lib/termine';
 import { KURS_BY_SLUG } from '@/lib/courses';
 import { toView, KURSE_MINI, naechsteJeKurs, formatDatum } from '@/lib/view';
 import { Icon } from '@/components/Icon';
+import LiquidMetalPanel from '@/components/ui/liquid-metal';
 import { SectionHead, Timeline, Promo, CtaBand, Steps } from '@/components/UI';
-import { HeroArc, ProcessViz, DayClockViz, RatioViz, PathViz, BookingFlowViz, MatrixViz } from '@/components/Visuals';
+import { ProcessViz, DayClockViz, RatioViz, PathViz, BookingFlowViz, MatrixViz } from '@/components/Visuals';
 import { TerminExplorer } from '@/components/TerminExplorer';
 import { ReviewsSection, FilialeMuenchen, StandorteSection, FaqSection, CourseGrid, KursraumDozenten, VideosSection } from '@/components/Sections';
 import { JsonLd } from '@/components/JsonLd';
@@ -21,8 +22,8 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' }
 };
 
-export default function Home() {
-  const termine = kommendeTermine();
+export default async function Home() {
+  const termine = await kommendeTermine();
   const naechste = naechsteJeKurs(termine);
   const erster = termine.find((t) => t.frei > 0);
   const ersterKurs = erster ? KURS_BY_SLUG[erster.kurs] : null;
@@ -63,7 +64,7 @@ export default function Home() {
                 </Link>
               )}
             </div>
-            <div className="stage__visual"><HeroArc /></div>
+            <div className="stage__visual"><div className="hero-metal"><LiquidMetalPanel label="Flüssiges Metall – Sinnbild für das Schmelzbad beim Schweißen" /><span className="chip chip--dark hero-metal__tag"><Icon name="spark" />Schmelzbad in Bewegung</span></div></div>
           </div>
         </div>
       </section>

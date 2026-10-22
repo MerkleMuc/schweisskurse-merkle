@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   alternates: { canonical: '/anmeldung-hamburg/' }
 };
 
-export default function Page() {
+export default async function Page() {
   const s = STANDORTE.hamburg;
-  const termine = kommendeTermine({ standort: 'hamburg' });
+  const termine = await kommendeTermine({ standort: 'hamburg' });
   return (
     <>
       <PageHero trail={[{ label: s.name, href: s.regionUrl }, { label: 'Anmeldung', href: s.anmeldungUrl }]} kicker="Online-Anmeldung" title={<>Anmeldung <b>Region Hamburg</b></>}

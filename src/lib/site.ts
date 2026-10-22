@@ -155,8 +155,8 @@ export const STANDORTE: Record<StandortId, Standort> = {
    Portrait der zweiten Person liegt noch nicht vor – es wird ein
    Monogramm gezeigt, bis /public/images/team/<slug>.jpg existiert. */
 export const KURS_TEAM = [
-  { name: 'Vanessa Mendes', rolle: 'Kursberatung & Anmeldung München', foto: '/images/team/vanessa-mendes.jpg', tel: TEL.kurse, mail: 'info@schweisskurse-merkle.de' },
-  { name: 'Bernd Koliwer', rolle: 'Dozent & Anmeldung Region Hamburg', foto: null as string | null, tel: TEL.hamburgDozent, mail: 'info@schweisskurse-merkle.de' }
+  { standort: 'muenchen' as StandortId, ort: 'München-Freiham', name: 'Vanessa Mendes', rolle: 'Kursberatung & Anmeldung München', foto: '/images/team/vanessa-mendes.jpg', tel: TEL.kurse, mail: 'info@schweisskurse-merkle.de', zeiten: 'Mo–Fr erreichbar' },
+  { standort: 'hamburg' as StandortId, ort: 'Ellerhoop bei Hamburg', name: 'Bernd Koliwer', rolle: 'Dozent & Anmeldung Region Hamburg', foto: null as string | null, tel: TEL.hamburgDozent, mail: 'info@schweisskurse-merkle.de', zeiten: 'Anmeldung auch telefonisch' }
 ];
 
 /* Namen aus dem Bestand. Kurzbiografien und Portraits liefert das Team nach. */

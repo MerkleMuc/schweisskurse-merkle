@@ -4,8 +4,8 @@ import { kommendeTermine } from './termine';
 import { naechsteJeKurs } from './view';
 import type { KursCard } from '@/components/CourseFilter';
 
-export function kursCards(filter?: (k: Kurs) => boolean): KursCard[] {
-  const termine = kommendeTermine();
+export async function kursCards(filter?: (k: Kurs) => boolean): Promise<KursCard[]> {
+  const termine = await kommendeTermine();
   const naechste = naechsteJeKurs(termine);
   return KURSE.filter(filter || (() => true)).map((k) => ({
     slug: k.slug, name: k.name, kurz: k.kurz, verfahren: k.verfahren, verfahrenLabel: k.verfahrenLabel, level: k.level, standorte: k.standorte,

@@ -15,9 +15,9 @@ export default async function Buchungen({ params, searchParams }: { params: Prom
   if (!isStandort(standort)) notFound();
   await requireSession(standort);
   const { ok, status } = await searchParams;
-  const alle = listBuchungen(standort);
+  const alle = await listBuchungen(standort);
   const liste = status ? alle.filter((b) => b.status === status) : alle;
-  const widerrufe = listWiderrufe();
+  const widerrufe = await listWiderrufe();
   const self = `/admin/${standort}/buchungen/`;
   return (
     <>
